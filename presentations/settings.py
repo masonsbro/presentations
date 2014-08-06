@@ -101,7 +101,6 @@ TEMPLATE_DIRS = (
 
 AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-STATIC_URL = S3_URL
 
 AWS_S3_SECURE_URLS = False
 AWS_QUERYSTRING_AUTH = False
@@ -109,4 +108,7 @@ AWS_S3_ACCESS_KEY_ID = os.environ['AWS_S3_ACCESS_KEY_ID']
 AWS_S3_SECRET_ACCESS_KEY = os.environ['AWS_S3_SECRET_ACCESS_KEY']
 
 DEFAULT_FILE_STORAGE = 's3utils.MediaRootS3BotoStorage'
-STATICFILES_STORAGE = 's3utils.StaticRootS3BotoStorage'
+
+if 'PRESENTATIONS_DEBUG' not in os.environ:
+    STATICFILES_STORAGE = 's3utils.StaticRootS3BotoStorage'
+    STATIC_URL = S3_URL
