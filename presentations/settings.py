@@ -112,3 +112,5 @@ DEFAULT_FILE_STORAGE = 's3utils.MediaRootS3BotoStorage'
 if 'PRESENTATIONS_DEBUG' not in os.environ:
     STATICFILES_STORAGE = 's3utils.StaticRootS3BotoStorage'
     STATIC_URL = S3_URL
+else:
+    STATIC_URL = "/static/"
