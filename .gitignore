@@ -9,7 +9,6 @@ __pycache__/
 .Python
 env/
 venv/
-venv.bat
 bin/
 build/
 develop-eggs/
@@ -54,3 +53,5 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Windows stuff
+*.bat
