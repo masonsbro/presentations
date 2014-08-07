@@ -1,4 +1,4 @@
-remotecontrol
+presentations
 =============
 
-Personal project for sending keystrokes from one computer to another over a network (like remote desktop, but without the desktop part)
+Give PowerPoint-like presentations remotely over the internet to multiple clients
