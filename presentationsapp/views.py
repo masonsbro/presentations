@@ -1,4 +1,5 @@
 import zipfile
+import traceback
 
 from django.shortcuts import render, redirect
 
@@ -52,23 +53,27 @@ def create(req):
 			user = User.objects.get(email = req.session['email'])
 			presentation = Presentation(title = req.POST['title'], author = user, description = req.POST['description'])
 			# First, unzip the file upload
-			file = request.FILES['slides']
+			print req.FILES
+			file = req.FILES['slides']
 			with zipfile.ZipFile(file, 'r') as z:
 				# Start with 1 and keep going while there are more files
 				fn = 'Slide1.PNG'
-				slide = Slide(image = z.open(fn, 'r'))
+				slide = Slide()
 				slide.save()
+				slide.image.save(slide.pk, z.open(fn, 'rb').read())
 				presentation.first_slide = slide
 				for i in range(2, 1 + len(z.namelist())):
 					# Of course, this assumes that the user did what they were supposed to
 					# I should probably change this later to fix that assumption
 					fn = 'Slide' + str(i) + '.PNG'
-					next = Slide(image = z.open(fn, 'r'))
+					next = Slide()
 					next.save()
+					next.image.save(next.pk, z.open(fn, 'rb').read())
 					slide.next = next
 					slide.save()
 					slide = next
 			presentation.save()
+			return redirect("/")
 		except:
-			pass
+			traceback.print_exc()
 	return render(req, "create.html", {'request': req})

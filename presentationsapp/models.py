@@ -34,7 +34,7 @@ class User(models.Model):
 		return self.password_hash == hashed
 
 class Slide(models.Model):
-	image = models.FileField(upload_to = 'slides')
+	image = models.FileField(upload_to = 'slides', null = True)
 	# Slides are stored in a linked list
 	next = models.ForeignKey('self', null = True)
 
