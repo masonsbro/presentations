@@ -2,6 +2,7 @@ import zipfile
 import traceback
 
 from django.shortcuts import render, redirect
+from django.core.files.base import ContentFile
 
 from models import *
 
@@ -16,7 +17,14 @@ def only_logged_in(func):
 	return wrapper
 
 def index(req):
-	return render(req, "landing.html", {'request': req})
+	# TODO: Only display some presentations
+	if 'email' in req.session:
+		user = User.objects.get(email = req.session['email'])
+		my_presentations = Presentation.objects.filter(author = user)
+		return render(req, "dashboard.html", {'request': req, 'my_presentations': my_presentations})
+	else:
+		presentations = Presentation.objects.all()
+		return render(req, "landing.html", {'request': req, 'presentations': presentations})
 
 def login(req):
 	if req.method == 'POST':
@@ -60,7 +68,7 @@ def create(req):
 				fn = 'Slide1.PNG'
 				slide = Slide()
 				slide.save()
-				slide.image.save(slide.pk, z.open(fn, 'rb').read())
+				slide.image.save(str(slide.pk) + '.png', ContentFile(z.read(fn)))
 				presentation.first_slide = slide
 				for i in range(2, 1 + len(z.namelist())):
 					# Of course, this assumes that the user did what they were supposed to
@@ -68,7 +76,7 @@ def create(req):
 					fn = 'Slide' + str(i) + '.PNG'
 					next = Slide()
 					next.save()
-					next.image.save(next.pk, z.open(fn, 'rb').read())
+					next.image.save(str(next.pk) + '.png', ContentFile(z.read(fn,)))
 					slide.next = next
 					slide.save()
 					slide = next

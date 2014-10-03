@@ -43,3 +43,4 @@ class Presentation(models.Model):
 	author = models.ForeignKey('User')
 	description = models.TextField()
 	first_slide = models.ForeignKey('Slide', null = True)
+	current_slide = models.ForeignKey('Slide', null = True, related_name = 'curpres')

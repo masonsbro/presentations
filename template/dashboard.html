@@ -1,0 +1,30 @@
+{% extends "parent.html" %}
+
+{% block title %}Home{% endblock %}
+{% block home_active %}class="active"{% endblock %}
+
+{% block page_header %}
+	<h1>
+		Dashboard
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<h2>
+		My Presentations
+	</h2>
+	<hr>
+	{% if my_presentations %}
+		<table class="table">
+			{% for presentation in my_presentations %}
+				<tr>
+					<td>{{ presentation.pk }}</td>
+					<td>{{ presentation.title }}</td>
+					<td><a href="/present/{{ presentation.pk }}/">Present</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		You don't have any presentations.
+	{% endif %}
+{% endblock %}
