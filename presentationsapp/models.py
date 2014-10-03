@@ -32,3 +32,14 @@ class User(models.Model):
 		hashed = hashlib.sha512(salted).hexdigest()
 		# Check it against the stored one
 		return self.password_hash == hashed
+
+class Slide(models.Model):
+	image = models.FileField(upload_to = 'slides')
+	# Slides are stored in a linked list
+	next = models.ForeignKey('self', null = True)
+
+class Presentation(models.Model):
+	title = models.CharField(max_length = 256)
+	author = models.ForeignKey('User')
+	description = models.TextField()
+	first_slide = models.ForeignKey('Slide')

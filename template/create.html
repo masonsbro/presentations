@@ -1,0 +1,31 @@
+{% extends "parent.html" %}
+
+{% block title %}New Presentation{% endblock %}
+{% block login_active %}class="active"{% endblock %}
+
+{% block page_header %}
+	<h1>
+		New Presentation
+	</h1>
+{% endblock %}
+
+{% block content %}
+
+	<form role="form" method="POST" action="/create/">
+		{% csrf_token %}
+		<div class="form-group">
+			<input type="text" class="form-control" name="title" placeholder="Title">
+		</div>
+		<div class="form-group">
+			<textarea class="form-control" name="description" placeholder="Description" rows="4"></textarea>
+		</div>
+		<div class="form-group">
+			<label for="slides">Upload a .zip archive containing all of the slides in your presentation, named like Slide1.PNG:</label>
+			<input type="file" class="form-control" name="slides" id="slides" accept="application/zip">
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-success btn-block" value="Create">
+		</div>
+	</form>
+
+{% endblock %}

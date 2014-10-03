@@ -4,6 +4,14 @@ from models import *
 
 # Create your views here.
 
+def only_logged_in(func):
+	def wrapper(req, *args, **kwargs):
+		if 'email' in req.session:
+			return func(req, *args, **kwargs)
+		else:
+			return redirect("/login/")
+	return wrapper
+
 def index(req):
 	return render(req, "landing.html", {'request': req})
 
@@ -34,3 +42,12 @@ def register(req):
 def logout(req):
 	del req.session['email']
 	return redirect("/")
+
+@only_logged_in
+def create(req):
+	if req.method == 'POST':
+		try:
+			pass
+		except:
+			pass
+	return render(req, "create.html", {'request': req})

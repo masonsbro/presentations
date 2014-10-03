@@ -37,6 +37,9 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li {% block home_active %}{% endblock %}><a href="/">Home</a></li>
+						{% if request.session.email %}
+							<li {% block create_active %}{% endblock %}><a href="/create/">Create</a></li>
+						{% endif %}
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						{% if not request.session.email %}
