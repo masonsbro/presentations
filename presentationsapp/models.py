@@ -42,4 +42,4 @@ class Presentation(models.Model):
 	title = models.CharField(max_length = 256)
 	author = models.ForeignKey('User')
 	description = models.TextField()
-	first_slide = models.ForeignKey('Slide')
+	first_slide = models.ForeignKey('Slide', null = True)

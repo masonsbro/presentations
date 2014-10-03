@@ -11,7 +11,7 @@
 
 {% block content %}
 
-	<form role="form" method="POST" action="/create/">
+	<form role="form" method="POST" action="/create/" enctype="multipart/form-data">
 		{% csrf_token %}
 		<div class="form-group">
 			<input type="text" class="form-control" name="title" placeholder="Title">
