@@ -5,10 +5,10 @@ from models import *
 # Create your views here.
 
 def index(req):
-	return render(req, "landing.html", {})
+	return render(req, "landing.html", {'request': req})
 
 def login(req):
-	return render(req, "login.html", {})
+	return render(req, "login.html", {'request': req})
 
 def register(req):
 	if req.method == 'POST':
@@ -20,4 +20,4 @@ def register(req):
 		except:
 			# I'm kind of lazy
 			pass
-	return render(req, "register.html", {})
+	return render(req, "register.html", {'request': req})
