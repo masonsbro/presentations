@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from models import *
 
@@ -11,4 +11,13 @@ def login(req):
 	return render(req, "login.html", {})
 
 def register(req):
+	if req.method == 'POST':
+		try:
+			user = User(email = req.POST['email'])
+			user.set_password(req.POST['password'])
+			req.session['email'] = req.POST['email']
+			return redirect("/")
+		except:
+			# I'm kind of lazy
+			pass
 	return render(req, "register.html", {})
