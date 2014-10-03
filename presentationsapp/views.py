@@ -21,3 +21,7 @@ def register(req):
 			# I'm kind of lazy
 			pass
 	return render(req, "register.html", {'request': req})
+
+def logout(req):
+	del req.session['email']
+	return redirect("/")
