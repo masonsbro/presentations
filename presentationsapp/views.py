@@ -85,3 +85,44 @@ def create(req):
 		except:
 			traceback.print_exc()
 	return render(req, "create.html", {'request': req})
+
+@only_logged_in
+def present(req, id):
+	user = User.objects.get(email = req.session['email'])
+	presentation = Presentation.objects.get(pk = id)
+	if presentation.author != user:
+		return redirect("/")
+	return render(req, "present.html", {'request': req, 'presentation': presentation})
+
+@only_logged_in
+def control_next(req, id):
+	user = User.objects.get(email = req.session['email'])
+	presentation = Presentation.objects.get(pk = id)
+	if presentation.author != user:
+		return redirect("/")
+	# If no current slide
+	if not presentation.current_slide:
+		presentation.current_slide = presentation.first_slide
+	# Otherwise
+	else:
+		try:
+			presentation.current_slide = presentation.current_slide.next
+		except:
+			presentation.current_slide = None
+	presentation.save()
+	return redirect("/present/" + str(presentation.pk) + "/")
+
+@only_logged_in
+def control_prev(req, id):
+	user = User.objects.get(email = req.session['email'])
+	presentation = Presentation.objects.get(pk = id)
+	if presentation.author != user:
+		return redirect("/")
+	# If on first slide already
+	if presentation.current_slide == presentation.first_slide:
+		presentation.current_slide = None
+	# Otherwise
+	else:
+		presentation.current_slide = Slide.objects.get(next = presentation.current_slide)
+	presentation.save()
+	return redirect("/present/" + str(presentation.pk) + "/")

@@ -9,5 +9,7 @@ urlpatterns = patterns('',
 	url(r'^logout/$', views.logout),
 	url(r'^create/$', views.create),
 	url(r'^present/(?P<id>[0-9]+)/$', views.present),
+	url(r'^control/(?P<id>[0-9]+)/next/$', views.control_next),
+	url(r'^control/(?P<id>[0-9]+)/prev/$', views.control_prev),
 	url(r'^$', views.index),
 )

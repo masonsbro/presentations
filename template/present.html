@@ -1,0 +1,24 @@
+{% extends "parent.html" %}
+
+{% block title %}Present{% endblock %}
+{% block home_active %}class="active"{% endblock %}
+
+{% block page_header %}
+	<h1>
+		Present
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<h2>
+		Controls
+	</h2>
+	<hr>
+	<a href="/control/{{ presentation.pk }}/next/">Next Slide</a>
+	<a href="/control/{{ presentation.pk }}/prev/">Previous Slide</a>
+	<h2>
+		Current Slide
+	</h2>
+	<hr>
+	<img src="{{ presentation.current_slide.image.url }}">
+{% endblock %}
