@@ -9,3 +9,6 @@ def index(req):
 
 def login(req):
 	return render(req, "login.html", {})
+
+def register(req):
+	return render(req, "register.html", {})
