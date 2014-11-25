@@ -1,0 +1,18 @@
+{% extends "parent.html" %}
+
+{% block title %}Presentation{% endblock %}
+{% block home_active %}class="active"{% endblock %}
+
+{% block page_header %}
+	<h1>
+		Presentation
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<h2>
+		Controls
+	</h2>
+	<hr>
+	<a href="/control/{{ presentation.pk }}/start/">Start Presentation</a>
+{% endblock %}

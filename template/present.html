@@ -1,24 +1,25 @@
 {% extends "parent.html" %}
 
-{% block title %}Present{% endblock %}
-{% block home_active %}class="active"{% endblock %}
+{% load staticfiles %}
 
-{% block page_header %}
-	<h1>
-		Present
-	</h1>
-{% endblock %}
+{% block title %}{{ presentation.title }}{% endblock %}
+{% block head %}<link rel="stylesheet" href="{% static "css/present.css" %}">{% endblock %}
 
-{% block content %}
-	<h2>
-		Controls
-	</h2>
-	<hr>
-	<a href="/control/{{ presentation.pk }}/next/">Next Slide</a>
-	<a href="/control/{{ presentation.pk }}/prev/">Previous Slide</a>
-	<h2>
-		Current Slide
-	</h2>
-	<hr>
+{% block body %}
 	<img src="{{ presentation.current_slide.image.url }}">
+	{% if controls %}
+		<div class="controls">
+			<div class="control">
+				<a href="/control/{{ presentation.pk }}/next/">N</a>
+			</div>
+			<div class="control">
+				<a href="/control/{{ presentation.pk }}/prev/">P</a>
+			</div>
+			<div class="control">
+				<a href="/control/{{ presentation.pk }}/end/">E</a>
+			</div>
+		</div>
+	{% else %}
+		<!-- TODO: auto update -->
+	{% endif %}
 {% endblock %}

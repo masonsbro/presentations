@@ -87,12 +87,45 @@ def create(req):
 	return render(req, "create.html", {'request': req})
 
 @only_logged_in
+def presentation(req, id):
+	# For the author of a presentation NOT currently presenting.
+	user = User.objects.get(email = req.session['email'])
+	presentation = Presentation.objects.get(pk = id)
+	# TODO: Allow all users to view all presentations?
+	if presentation.author != user:
+		return redirect("/")
+	return render(req, "presentation.html", {'request': req, 'presentation': presentation})
+
+@only_logged_in
 def present(req, id):
+	# For any user viewing a presentation. Display current slide, full screen, and if user is author, show controls.
+	user = User.objects.get(email = req.session['email'])
+	presentation = Presentation.objects.get(pk = id)
+	if not presentation.current_slide:
+		# If the presentation has already ended, redirect to presentation info page
+		return redirect("/presentation/" + str(presentation.pk) + "/")
+	controls = presentation.author == user
+	return render(req, "present.html", {'request': req, 'presentation': presentation, 'controls': controls})
+
+@only_logged_in
+def control_start(req, id):
 	user = User.objects.get(email = req.session['email'])
 	presentation = Presentation.objects.get(pk = id)
 	if presentation.author != user:
 		return redirect("/")
-	return render(req, "present.html", {'request': req, 'presentation': presentation})
+	presentation.current_slide = presentation.first_slide
+	presentation.save()
+	return redirect("/present/" + str(presentation.pk) + "/")
+
+@only_logged_in
+def control_end(req, id):
+	user = User.objects.get(email = req.session['email'])
+	presentation = Presentation.objects.get(pk = id)
+	if presentation.author != user:
+		return redirect("/")
+	presentation.current_slide = None
+	presentation.save()
+	return redirect("/presentation/" + str(presentation.pk) + "/")
 
 @only_logged_in
 def control_next(req, id):
