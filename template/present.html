@@ -10,13 +10,19 @@
 	{% if controls %}
 		<div class="controls">
 			<div class="control">
-				<a href="/control/{{ presentation.pk }}/next/">N</a>
+				<a href="/control/{{ presentation.pk }}/next/" title="Next Slide">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				</a>
 			</div>
 			<div class="control">
-				<a href="/control/{{ presentation.pk }}/prev/">P</a>
+				<a href="/control/{{ presentation.pk }}/prev/" title="Previous Slide">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				</a>
 			</div>
 			<div class="control">
-				<a href="/control/{{ presentation.pk }}/end/">E</a>
+				<a href="/control/{{ presentation.pk }}/end/" title="End Presentation">
+					<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+				</a>
 			</div>
 		</div>
 	{% else %}
