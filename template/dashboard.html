@@ -14,17 +14,32 @@
 		My Presentations
 	</h2>
 	<hr>
-	{% if my_presentations %}
-		<table class="table">
-			{% for presentation in my_presentations %}
-				<tr>
-					<td>{{ presentation.pk }}</td>
-					<td>{{ presentation.title }}</td>
-					<td><a href="/presentation/{{ presentation.pk }}/">Details</a></td>
-				</tr>
-			{% endfor %}
-		</table>
-	{% else %}
-		You don't have any presentations.
-	{% endif %}
+	<div class="full-container">
+		{% for presentation in my_presentations %}
+			<div class="presentation-thumb">
+				<a href="/presentation/{{ presentation.pk }}/">
+					<p>{{ presentation.title }}</p>
+					<img src="{{ presentation.first_slide.image.url }}">
+				</a>
+			</div>
+		{% empty %}
+			You don't have any presentations.
+		{% endfor %}
+	</div>
+	<h2>
+		Presentations In Progress
+	</h2>
+	<hr>
+	<div class="full-container">
+		{% for presentation in cur_presentations %}
+			<div class="presentation-thumb">
+				<a href="/present/{{ presentation.pk }}/">
+					<p>{{ presentation.title }}</p>
+					<img src="{{ presentation.first_slide.image.url }}">
+				</a>
+			</div>
+		{% empty %}
+			There are no presentations in progress.
+		{% endfor %}
+	</div>
 {% endblock %}

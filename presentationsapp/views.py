@@ -17,11 +17,11 @@ def only_logged_in(func):
 	return wrapper
 
 def index(req):
-	# TODO: Only display some presentations
 	if 'email' in req.session:
 		user = User.objects.get(email = req.session['email'])
 		my_presentations = Presentation.objects.filter(author = user)
-		return render(req, "dashboard.html", {'request': req, 'my_presentations': my_presentations})
+		cur_presentations = Presentation.objects.exclude(current_slide = None)
+		return render(req, "dashboard.html", {'request': req, 'my_presentations': my_presentations, 'cur_presentations': cur_presentations})
 	else:
 		presentations = Presentation.objects.all()
 		return render(req, "landing.html", {'request': req, 'presentations': presentations})
