@@ -35,7 +35,7 @@
 			<div class="presentation-thumb">
 				<a href="/present/{{ presentation.pk }}/">
 					<p>{{ presentation.title }}</p>
-					<img src="{{ presentation.first_slide.image.url }}">
+					<img src="{{ presentation.current_slide.image.url }}">
 				</a>
 			</div>
 		{% empty %}

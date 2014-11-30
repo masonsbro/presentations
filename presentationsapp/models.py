@@ -13,6 +13,8 @@ class User(models.Model):
 	admin = models.BooleanField(default = False)
 	active = models.BooleanField(default = False)
 	name = models.CharField(max_length = 64, null = True, blank = True, default = "")
+	viewing = models.ForeignKey('Presentation', null = True)
+	viewing_updated = models.DateTimeField(null = True)
 
 	def set_password(self, password):
 		# Generate random salt
@@ -44,6 +46,7 @@ class Presentation(models.Model):
 	description = models.TextField()
 	first_slide = models.ForeignKey('Slide', null = True)
 	current_slide = models.ForeignKey('Slide', null = True, related_name = 'curpres')
+	public = models.BooleanField(default = True)
 
 	class Meta:
 		ordering = ['-pk']

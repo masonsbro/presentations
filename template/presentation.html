@@ -1,18 +1,42 @@
 {% extends "parent.html" %}
 
 {% block title %}{{ presentation.title }}{% endblock %}
-{% block home_active %}class="active"{% endblock %}
 
 {% block page_header %}
 	<h1>
-		Presentation: {{ presentation.title }}
+		{{ presentation.title }}
 	</h1>
 {% endblock %}
 
 {% block content %}
 	<h2>
+		Information
+	</h2>
+	<hr>
+	{% if presentation.description %}
+		{{ presentation.description|linebreaks }}
+	{% else %}
+		<p class="emphasis">
+			This presentation has no description.
+		</p>
+	{% endif %}
+	<p class="emphasis">
+		{% if presentation.public %}
+			This presentation is public. All users can see when it is being presented.
+		{% else %}
+			This presentation is private and is only available to users with the link.
+		{% endif %}
+	</p>
+	<p>
+		<a href="/edit/{{ presentation.pk }}/">Edit</a>
+	</p>
+	<h2>
 		Controls
 	</h2>
 	<hr>
-	<a href="/control/{{ presentation.pk }}/start/">Start Presentation</a>
+	{% if presentation.current_slide %}
+		<a href="/present/{{ presentation.pk }}/">Resume Presentation</a>
+	{% else %}
+		<a href="/control/{{ presentation.pk }}/start/">Start Presentation</a>
+	{% endif %}
 {% endblock %}

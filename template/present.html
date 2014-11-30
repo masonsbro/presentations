@@ -6,7 +6,8 @@
 {% block head %}<link rel="stylesheet" href="{% static "css/present.css" %}">{% endblock %}
 
 {% block body %}
-	<img src="{{ presentation.current_slide.image.url }}">
+	<img id="main" src="{{ presentation.current_slide.image.url }}">
+	<span id="id" style="display: none">{{ presentation.pk }}</span>
 	{% if controls %}
 		<div class="controls">
 			<div class="control">
@@ -24,8 +25,19 @@
 					<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 				</a>
 			</div>
+			<div class="control">
+				<a id="numViewers" tabindex="0" data-toggle="popover" data-container="body" data-trigger="focus" data-placement="top" data-content="Loading...">
+					{{ views }}
+				</a>
+			</div>
 		</div>
+	{% endif %}
+{% endblock %}
+
+{% block scripts %}
+	{% if not controls %}
+		<script src="{% static "js/update.js" %}"></script>
 	{% else %}
-		<!-- TODO: auto update -->
+		<script src="{% static "js/update_presenter.js" %}"></script>
 	{% endif %}
 {% endblock %}
